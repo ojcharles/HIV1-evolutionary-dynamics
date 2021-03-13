@@ -1,0 +1,15 @@
+PLINK v1.90b6.21 64-bit (19 Oct 2020)
+Options in effect:
+  --double-id
+  --out 7-mutinf/plink
+  --vcf 7-mutinf/allhaplos.fasta.vcf
+
+Hostname: norworries
+Working directory: /home/oscar/210210-hiv
+Start time: Thu Feb 11 13:45:25 2021
+
+Random number seed: 1613051125
+64340 MB RAM detected; reserving 32170 MB for main workspace.
+--vcf: 7-mutinf/plink.bed + 7-mutinf/plink.bim + 7-mutinf/plink.fam written.
+
+End time: Thu Feb 11 13:45:25 2021

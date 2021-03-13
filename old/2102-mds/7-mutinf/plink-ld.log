@@ -1,0 +1,29 @@
+PLINK v1.90b6.21 64-bit (19 Oct 2020)
+Options in effect:
+  --bfile 7-mutinf/plink
+  --inter-chr
+  --mac 5
+  --out 7-mutinf/plink-ld
+  --r2
+
+Hostname: norworries
+Working directory: /home/oscar/210210-hiv
+Start time: Thu Feb 11 13:45:32 2021
+
+Note: --inter-chr flag deprecated.  Use e.g. "--r2 inter-chr".
+Random number seed: 1613051132
+64340 MB RAM detected; reserving 32170 MB for main workspace.
+3922 variants loaded from .bim file.
+253 people (0 males, 0 females, 253 ambiguous) loaded from .fam.
+Ambiguous sex IDs written to 7-mutinf/plink-ld.nosex .
+Using up to 23 threads (change this with --threads).
+Before main variant filters, 253 founders and 0 nonfounders present.
+Calculating allele frequencies... done.
+Total genotyping rate is 0.922464.
+3 variants removed due to minor allele threshold(s)
+(--maf/--max-maf/--mac/--max-mac).
+3919 variants and 253 people pass filters and QC.
+Note: No phenotypes present.
+--r2 inter-chr to 7-mutinf/plink-ld.ld ... done.
+
+End time: Thu Feb 11 13:45:32 2021

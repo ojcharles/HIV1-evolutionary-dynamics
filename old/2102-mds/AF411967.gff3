@@ -1,0 +1,26 @@
+##sequence-region AF411967.1 1 9761
+##species https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi?id=11676
+AF411967.1	Genbank	region	1	9761	.	+	.	ID=AF411967.1:1..9761;Dbxref=taxon:11676;country=South Africa;gb-acronym=HIV-1;gbkey=Src;genome=proviral;isolate=99ZACM9;mol_type=genomic DNA;note=isolated from a 30 year old female patient with cryptococcal meningitis.;old-name=Human immunodeficiency virus type 1;subtype=C
+AF411967.1	Genbank	long_terminal_repeat	1	791	.	+	.	ID=id-AF411967.1:1..791;gbkey=repeat_region;rpt_type=long_terminal_repeat
+AF411967.1	Genbank	gene	792	2279	.	+	.	ID=gene-gag;Name=gag;gbkey=Gene;gene=gag;gene_biotype=protein_coding
+AF411967.1	Genbank	CDS	792	2279	.	+	0	ID=cds-AAN47127.1;Parent=gene-gag;Dbxref=NCBI_GP:AAN47127.1;Name=AAN47127.1;gbkey=CDS;gene=gag;product=gag protein;protein_id=AAN47127.1
+AF411967.1	Genbank	gene	2081	5083	.	+	.	ID=gene-pol;Name=pol;gbkey=Gene;gene=pol;gene_biotype=protein_coding;partial=true;start_range=.,2081
+AF411967.1	Genbank	CDS	2081	5083	.	+	0	ID=cds-AAN47128.1;Parent=gene-pol;Dbxref=NCBI_GP:AAN47128.1;Name=AAN47128.1;gbkey=CDS;gene=pol;partial=true;product=pol protein;protein_id=AAN47128.1;start_range=.,2081
+AF411967.1	Genbank	gene	5028	5606	.	+	.	ID=gene-vif;Name=vif;gbkey=Gene;gene=vif;gene_biotype=protein_coding
+AF411967.1	Genbank	CDS	5028	5606	.	+	0	ID=cds-AAN47129.1;Parent=gene-vif;Dbxref=NCBI_GP:AAN47129.1;Name=AAN47129.1;gbkey=CDS;gene=vif;product=vif protein;protein_id=AAN47129.1
+AF411967.1	Genbank	gene	5546	5836	.	+	.	ID=gene-vpr;Name=vpr;gbkey=Gene;gene=vpr;gene_biotype=protein_coding
+AF411967.1	Genbank	CDS	5546	5836	.	+	0	ID=cds-AAN47130.1;Parent=gene-vpr;Dbxref=NCBI_GP:AAN47130.1;Name=AAN47130.1;gbkey=CDS;gene=vpr;product=vpr protein;protein_id=AAN47130.1
+AF411967.1	Genbank	gene	5817	8480	.	+	.	ID=gene-tat;Name=tat;gbkey=Gene;gene=tat;gene_biotype=protein_coding
+AF411967.1	Genbank	CDS	5817	6031	.	+	0	ID=cds-AAN47131.1;Parent=gene-tat;Dbxref=NCBI_GP:AAN47131.1;Name=AAN47131.1;gbkey=CDS;gene=tat;part=1;product=tat protein;protein_id=AAN47131.1
+AF411967.1	Genbank	CDS	8393	8480	.	+	1	ID=cds-AAN47131.1;Parent=gene-tat;Dbxref=NCBI_GP:AAN47131.1;Name=AAN47131.1;gbkey=CDS;gene=tat;part=2;product=tat protein;protein_id=AAN47131.1
+AF411967.1	Genbank	gene	5956	8622	.	+	.	ID=gene-rev;Name=rev;gbkey=Gene;gene=rev;gene_biotype=protein_coding
+AF411967.1	Genbank	CDS	5956	6031	.	+	0	ID=cds-AAN47132.1;Parent=gene-rev;Dbxref=NCBI_GP:AAN47132.1;Name=AAN47132.1;gbkey=CDS;gene=rev;part=1;product=rev protein;protein_id=AAN47132.1
+AF411967.1	Genbank	CDS	8393	8622	.	+	2	ID=cds-AAN47132.1;Parent=gene-rev;Dbxref=NCBI_GP:AAN47132.1;Name=AAN47132.1;gbkey=CDS;gene=rev;part=2;product=rev protein;protein_id=AAN47132.1
+AF411967.1	Genbank	gene	6055	6309	.	+	.	ID=gene-vpu;Name=vpu;gbkey=Gene;gene=vpu;gene_biotype=protein_coding
+AF411967.1	Genbank	CDS	6055	6309	.	+	0	ID=cds-AAN47133.1;Parent=gene-vpu;Dbxref=NCBI_GP:AAN47133.1;Name=AAN47133.1;gbkey=CDS;gene=vpu;product=vpu protein;protein_id=AAN47133.1
+AF411967.1	Genbank	gene	6233	8812	.	+	.	ID=gene-env;Name=env;gbkey=Gene;gene=env;gene_biotype=protein_coding
+AF411967.1	Genbank	CDS	6233	8812	.	+	0	ID=cds-AAN47134.1;Parent=gene-env;Dbxref=NCBI_GP:AAN47134.1;Name=AAN47134.1;gbkey=CDS;gene=env;product=envelope glycoprotein;protein_id=AAN47134.1
+AF411967.1	Genbank	gene	8814	9458	.	+	.	ID=gene-nef;Name=nef;gbkey=Gene;gene=nef;gene_biotype=protein_coding
+AF411967.1	Genbank	CDS	8814	9458	.	+	0	ID=cds-AAN47135.1;Parent=gene-nef;Dbxref=NCBI_GP:AAN47135.1;Name=AAN47135.1;gbkey=CDS;gene=nef;product=nef protein;protein_id=AAN47135.1
+AF411967.1	Genbank	long_terminal_repeat	9127	9761	.	+	.	ID=id-AF411967.1:9127..9761;gbkey=repeat_region;rpt_type=long_terminal_repeat
+

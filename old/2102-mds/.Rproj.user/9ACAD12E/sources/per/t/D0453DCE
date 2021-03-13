@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1613154477955.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1074085460",
+    "id" : "D0453DCE",
+    "lastKnownWriteTime" : 1614608059,
+    "last_content_update" : 1614608059,
+    "path" : "~/210210-hiv/fig1.R",
+    "project_path" : "fig1.R",
+    "properties" : {
+        "cursorPosition" : "85,53",
+        "scrollLine" : "0",
+        "tempName" : "Untitled1"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

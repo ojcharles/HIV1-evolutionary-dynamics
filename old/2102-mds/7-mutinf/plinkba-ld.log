@@ -1,0 +1,18 @@
+PLINK v1.90b6.21 64-bit (19 Oct 2020)
+Options in effect:
+  --bfile 7-mutinf/plinkba
+  --inter-chr
+  --mac 5
+  --out 7-mutinf/plinkba-ld
+  --r2
+
+Hostname: norworries
+Working directory: /home/oscar/210210-hiv
+Start time: Thu Feb 11 13:46:01 2021
+
+Note: --inter-chr flag deprecated.  Use e.g. "--r2 inter-chr".
+Random number seed: 1613051161
+64340 MB RAM detected; reserving 32170 MB for main workspace.
+Error: No variants in .bim file.
+
+End time: Thu Feb 11 13:46:01 2021
