@@ -76,6 +76,24 @@ df2 = rbind(df2,df)
 
 
 
+#------------- simple R default smoothing
+
+g = ggplot(df2,aes(x = months, y = tp1_div, colour = as.factor(patient))) +
+  geom_point() +
+  geom_smooth(se = F) +
+  theme_classic() +
+  labs(subtitle = "linear regression of TN93 pairwise distannces of all timepoints against the patient tp0 sequence as proxy for founder sequence") +
+  guides(colour=guide_legend(title="Patient"))
+#g
+ggsave(filename = paste0(analysis_outdir, "divergence_smooth.png"), device = "png",plot = g)
+
+ggsave(filename = paste0(analysis_outdir, "divergence_smooth.tiff"), device = "tiff",plot = g)
+
+
+
+
+
+#------------- linear model
 
 g = ggplot(df2,aes(x = months, y = tp1_div, colour = as.factor(patient))) +
   geom_point() +
