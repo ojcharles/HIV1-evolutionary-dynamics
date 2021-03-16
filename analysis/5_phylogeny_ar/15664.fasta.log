@@ -1,0 +1,117 @@
+IQ-TREE multicore version 1.6.1 for Linux 64-bit built Feb 16 2018
+Developed by Bui Quang Minh, Nguyen Lam Tung, Olga Chernomor,
+Heiko Schmidt, Dominik Schrempf, Michael Woodhams.
+
+Host:    norworries (AVX, 62 GB RAM)
+Command: iqtree -s data/tree/15664.fasta -m GTR+G4+FO -bb 1000 -alrt 1000 -asr -nt 6 -redo
+Seed:    940919 (Using SPRNG - Scalable Parallel Random Number Generator)
+Time:    Tue Mar 16 16:36:37 2021
+Kernel:  AVX - 6 threads (24 CPU cores detected)
+
+Reading alignment file data/tree/15664.fasta ... Fasta format detected
+Alignment most likely contains DNA/RNA sequences
+WARNING: 115 sites contain only gaps or ambiguous characters.
+Alignment has 6 sequences with 9758 columns, 226 distinct patterns
+153 parsimony-informative, 451 singleton sites, 9154 constant sites
+                                                                                                    Gap/Ambiguity  Composition  p-value
+   1  15664_1_-_87415_S75_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence          3.34%    passed     99.11%
+   2  15664_2_-_504194_S38_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence         3.44%    passed     99.92%
+   3  15664_3_-_504202_S46_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence         3.48%    passed     99.94%
+   4  15664_4_-_TASPX119494_S74_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence    1.99%    passed     92.14%
+   5  15664_5_-_504210_S54_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence         2.88%    passed     98.81%
+   6  15664_6_-_504217_S61_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence         2.90%    passed     99.63%
+****  TOTAL                                                                                                 3.01%  0 sequences failed composition chi2 test (p-value<5%; df=3)
+
+Create initial parsimony tree by phylogenetic likelihood library (PLL)... 0.000 seconds
+Generating 1000 samples for ultrafast bootstrap (seed: 940919)...
+
+NOTE: 1 MB RAM (0 GB) is required!
+WARNING: Number of threads seems too high for short alignments. Use -nt AUTO to determine best number of threads.
+Estimate model parameters (epsilon = 0.100)
+1. Initial log-likelihood: -17351.387
+2. Current log-likelihood: -17108.604
+3. Current log-likelihood: -17104.719
+Optimal log-likelihood: -17104.712
+Rate parameters:  A-C: 2.61168  A-G: 5.16296  A-T: 1.15179  C-G: 1.02664  C-T: 6.77523  G-T: 1.00000
+Base frequencies:  A: 0.357  C: 0.179  G: 0.242  T: 0.221
+Gamma shape alpha: 0.020
+Parameters optimization took 3 rounds (0.015 sec)
+Computing ML distances based on estimated model parameters... 0.000 sec
+Computing BIONJ tree...
+0.000 seconds
+Log-likelihood of BIONJ tree: -17104.712
+--------------------------------------------------------------------
+|             INITIALIZING CANDIDATE TREE SET                      |
+--------------------------------------------------------------------
+Generating 99 parsimony trees... 0.037 second
+Computing log-likelihood of 6 initial trees ... 0.004 seconds
+Current best score: -17104.712
+
+Do NNI search on 7 best initial trees
+Finish initializing candidate tree set (7)
+Current best tree score: -17104.712 / CPU time: 0.067
+Number of iterations: 7
+--------------------------------------------------------------------
+|               OPTIMIZING CANDIDATE TREE SET                      |
+--------------------------------------------------------------------
+Iteration 10 / LogL: -17104.717 / Time: 0h:0m:0s
+Iteration 20 / LogL: -17104.717 / Time: 0h:0m:0s
+UPDATE BEST LOG-LIKELIHOOD: -17104.712
+Iteration 30 / LogL: -17104.725 / Time: 0h:0m:0s (0h:0m:0s left)
+Iteration 40 / LogL: -17104.833 / Time: 0h:0m:0s (0h:0m:0s left)
+Iteration 50 / LogL: -17104.725 / Time: 0h:0m:0s (0h:0m:0s left)
+Log-likelihood cutoff on original alignment: -17160.197
+Iteration 60 / LogL: -17104.814 / Time: 0h:0m:0s (0h:0m:0s left)
+Iteration 70 / LogL: -17104.717 / Time: 0h:0m:0s (0h:0m:0s left)
+Iteration 80 / LogL: -17104.717 / Time: 0h:0m:0s (0h:0m:0s left)
+Iteration 90 / LogL: -17132.040 / Time: 0h:0m:0s (0h:0m:0s left)
+Iteration 100 / LogL: -17104.722 / Time: 0h:0m:1s (0h:0m:0s left)
+Log-likelihood cutoff on original alignment: -17160.197
+NOTE: Bootstrap correlation coefficient of split occurrence frequencies: 0.998
+TREE SEARCH COMPLETED AFTER 101 ITERATIONS / Time: 0h:0m:1s
+
+--------------------------------------------------------------------
+|                    FINALIZING TREE SEARCH                        |
+--------------------------------------------------------------------
+Performs final model parameters optimization
+Estimate model parameters (epsilon = 0.010)
+1. Initial log-likelihood: -17104.712
+Optimal log-likelihood: -17104.712
+Rate parameters:  A-C: 2.61168  A-G: 5.16296  A-T: 1.15179  C-G: 1.02664  C-T: 6.77523  G-T: 1.00000
+Base frequencies:  A: 0.357  C: 0.179  G: 0.242  T: 0.221
+Gamma shape alpha: 0.020
+Parameters optimization took 1 rounds (0.003 sec)
+BEST SCORE FOUND : -17104.712
+Ancestral state probabilities printed to data/tree/15664.fasta.state
+
+Testing tree branches by SH-like aLRT with 1000 replicates...
+CPU Time used:  0.130 sec.
+Creating bootstrap support values...
+Split supports printed to NEXUS file data/tree/15664.fasta.splits.nex
+Total tree length: 0.088
+
+Total number of iterations: 101
+CPU time used for tree search: 4.079 sec (0h:0m:4s)
+Wall-clock time used for tree search: 1.029 sec (0h:0m:1s)
+Total CPU time used: 4.563 sec (0h:0m:4s)
+Total wall-clock time used: 1.452 sec (0h:0m:1s)
+
+Computing bootstrap consensus tree...
+Reading input file data/tree/15664.fasta.splits.nex...
+6 taxa and 15 splits.
+Consensus tree written to data/tree/15664.fasta.contree
+Reading input trees file data/tree/15664.fasta.contree
+Log-likelihood of consensus tree: -17104.712
+
+Analysis results written to: 
+  IQ-TREE report:                data/tree/15664.fasta.iqtree
+  Maximum-likelihood tree:       data/tree/15664.fasta.treefile
+  Likelihood distances:          data/tree/15664.fasta.mldist
+  Ancestral state:               data/tree/15664.fasta.state
+
+Ultrafast bootstrap approximation results written to:
+  Split support values:          data/tree/15664.fasta.splits.nex
+  Consensus tree:                data/tree/15664.fasta.contree
+  Screen log file:               data/tree/15664.fasta.log
+
+Date and Time: Tue Mar 16 16:36:39 2021

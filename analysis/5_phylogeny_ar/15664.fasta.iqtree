@@ -1,0 +1,137 @@
+IQ-TREE 1.6.1 built Feb 16 2018
+
+Input file name: data/tree/15664.fasta
+Type of analysis: tree reconstruction + ultrafast bootstrap (1000 replicates)
+Random seed number: 940919
+
+REFERENCES
+----------
+
+To cite IQ-TREE please use:
+
+Lam-Tung Nguyen, Heiko A. Schmidt, Arndt von Haeseler, and Bui Quang Minh
+(2015) IQ-TREE: A fast and effective stochastic algorithm for estimating
+maximum likelihood phylogenies. Mol Biol Evol, 32:268-274.
+https://doi.org/10.1093/molbev/msu300
+
+Since you used ultrafast bootstrap (UFBoot) please also cite: 
+
+Diep Thi Hoang, Olga Chernomor, Arndt von Haeseler, Bui Quang Minh,
+and Le Sy Vinh (2017) UFBoot2: Improving the ultrafast bootstrap
+approximation. Mol Biol Evol, in press.
+https://doi.org/10.1093/molbev/msx281
+
+SEQUENCE ALIGNMENT
+------------------
+
+Input data: 6 sequences with 9758 nucleotide sites
+Number of constant sites: 9154 (= 93.8102% of all sites)
+Number of invariant (constant or ambiguous constant) sites: 9154 (= 93.8102% of all sites)
+Number of parsimony informative sites: 153
+Number of distinct site patterns: 226
+
+SUBSTITUTION PROCESS
+--------------------
+
+Model of substitution: GTR+FO+G4
+
+Rate parameter R:
+
+  A-C: 2.6117
+  A-G: 5.1630
+  A-T: 1.1518
+  C-G: 1.0266
+  C-T: 6.7752
+  G-T: 1.0000
+
+State frequencies: (estimated with maximum likelihood)
+
+  pi(A) = 0.3574
+  pi(C) = 0.1793
+  pi(G) = 0.2419
+  pi(T) = 0.2213
+
+Rate matrix Q:
+
+  A     -0.92    0.2185    0.5827    0.1189
+  C    0.4354    -1.251    0.1159    0.6993
+  G    0.8607   0.08588     -1.05    0.1032
+  T     0.192    0.5667    0.1129   -0.8716
+
+Model of rate heterogeneity: Gamma with 4 categories
+Gamma shape alpha: 0.02002
+
+ Category  Relative_rate  Proportion
+  1         4.767e-31      0.25
+  2         1.033e-15      0.25
+  3         9.658e-07      0.25
+  4         4              0.25
+Relative rates are computed as MEAN of the portion of the Gamma distribution falling in the category.
+
+MAXIMUM LIKELIHOOD TREE
+-----------------------
+
+Log-likelihood of the tree: -17104.7123 (s.e. 148.3547)
+Unconstrained log-likelihood (without tree): -19399.5401
+Number of free parameters (#branches + #model parameters): 18
+Akaike information criterion (AIC) score: 34245.4246
+Corrected Akaike information criterion (AICc) score: 34245.4949
+Bayesian information criterion (BIC) score: 34374.7698
+
+Total tree length (sum of branch lengths): 0.0876
+Sum of internal branch lengths: 0.0119 (13.6435% of tree length)
+
+NOTE: Tree is UNROOTED although outgroup taxon '15664_1_-_87415_S75_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence' is drawn at root
+Numbers in parentheses are SH-aLRT support (%) / ultrafast bootstrap support (%)
+
++---------15664_1_-_87415_S75_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence
+|
+|          +---15664_2_-_504194_S38_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence
+|       +--| (Node4/99.6/91)
+|       |  +--15664_3_-_504202_S46_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence
+|    +--| (Node3/99.9/91)
+|    |  +---15664_6_-_504217_S61_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence
++----| (Node2/99.4/91)
+|    +--15664_5_-_504210_S54_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence
+|
++-----------------------------------------------------------15664_4_-_TASPX119494_S74_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence
+
+Tree in newick format:
+
+(15664_1_-_87415_S75_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence:0.0094297000,(((15664_2_-_504194_S38_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence:0.0041607461,15664_3_-_504202_S46_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence:0.0016068999)Node4/99.6/91:0.0033364147,15664_6_-_504217_S61_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence:0.0036246996)Node3/99.9/91:0.0034432859,15664_5_-_504210_S54_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence:0.0035057769)Node2/99.4/91:0.0051679208,15664_4_-_TASPX119494_S74_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence:0.0532944851);
+
+CONSENSUS TREE
+--------------
+
+Consensus tree is constructed from 1000 bootstrap trees
+Log-likelihood of consensus tree: -17104.712319
+Robinson-Foulds distance between ML tree and consensus tree: 0
+
+Branches with bootstrap support >0.000000% are kept (extended consensus)
+Branch lengths are optimized by maximum likelihood on original alignment
+Numbers in parentheses are bootstrap supports (%)
+
++---------15664_1_-_87415_S75_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence
+|
+|          +---15664_2_-_504194_S38_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence
+|       +--| (91)
+|       |  +--15664_3_-_504202_S46_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence
+|    +--| (91)
+|    |  +---15664_6_-_504217_S61_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence
++----| (91)
+|    +--15664_5_-_504210_S54_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence
+|
++-----------------------------------------------------------15664_4_-_TASPX119494_S74_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence
+
+
+Consensus tree in newick format: 
+
+(15664_1_-_87415_S75_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence:0.0094285793,(((15664_2_-_504194_S38_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence:0.0041605765,15664_3_-_504202_S46_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence:0.0016069676)91:0.0033357017,15664_6_-_504217_S61_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence:0.0036245518)91:0.0034428158,15664_5_-_504210_S54_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence:0.0035053195)91:0.0051681300,15664_4_-_TASPX119494_S74_ConsensusRound1_GapsFilled_assembled_to_AF411967_FULL_consensus_sequence:0.0532943867);
+
+TIME STAMP
+----------
+
+Date and time: Tue Mar 16 16:36:39 2021
+Total CPU time used: 4.563383 seconds (0h:0m:4s)
+Total wall-clock time used: 1.456323959 seconds (0h:0m:1s)
+
