@@ -6,7 +6,7 @@
 ### options
 analysis_outdir = "analysis/6_DivergenceOverTime/"
 indir = "data/tree/"
-patients = c("15664", "16207","22763")
+patients = c("22763") #"15664","16207","22763","22828","26892","28545","29447","47939")
 vl_file = "data/patient_vl.csv"
 ###
 
@@ -40,8 +40,8 @@ for(i in 1:length(patients)){
   colnames(df) = tp
   df$timepoint = tp
   
-  # filter as we just want distance from tp1
-  col = grep("1|timepoint",colnames(df))
+  # filter as we just want distance from ancestral reconstructed subtype C (same in all patients)
+  col = grep("0|timepoint",colnames(df))
   df = df[,col]
   colnames(df) = c("tp1_div", "timepoint")
   
@@ -78,29 +78,27 @@ df2 = rbind(df2,df)
 
 #------------- simple R default smoothing
 
-g = ggplot(df2,aes(x = months, y = tp1_div, colour = as.factor(patient))) +
-  geom_point() +
-  geom_smooth(se = F) +
-  theme_classic() +
-  labs(subtitle = "linear regression of TN93 pairwise distannces of all timepoints against the patient tp0 sequence as proxy for founder sequence") +
-  guides(colour=guide_legend(title="Patient"))
+#g = ggplot(df2,aes(x = months, y = tp1_div, colour = as.factor(patient))) +
+ # geom_point() +
+  #geom_smooth(se = F) +
+  #theme_classic() +
+  #labs(subtitle = "linear regression of TN93 pairwise distannces of all timepoints against the patient tp0 sequence as proxy for founder sequence") +
+  #guides(colour=guide_legend(title="Patient"))
 #g
-ggsave(filename = paste0(analysis_outdir, "divergence_smooth.png"), device = "png",plot = g)
+#ggsave(filename = paste0(analysis_outdir, "divergence_smooth.png"), device = "png",plot = g)
 
-ggsave(filename = paste0(analysis_outdir, "divergence_smooth.tiff"), device = "tiff",plot = g)
-
-
-
+#ggsave(filename = paste0(analysis_outdir, "divergence_smooth.tiff"), device = "tiff",plot = g)
 
 
 #------------- linear model
 
 g = ggplot(df2,aes(x = months, y = tp1_div, colour = as.factor(patient))) +
   geom_point() +
-  geom_smooth(method = "lm",se = F) +
+  geom_smooth(method = "lm", se = T,) +
   theme_classic() +
   labs(subtitle = "linear regression of TN93 pairwise distannces of all timepoints against the patient tp0 sequence as proxy for founder sequence") +
   guides(colour=guide_legend(title="Patient"))
+
 #g
 ggsave(filename = paste0(analysis_outdir, "divergence_regression.png"), device = "png",plot = g)
 
