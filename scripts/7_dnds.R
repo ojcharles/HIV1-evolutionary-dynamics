@@ -2,6 +2,7 @@
 library(seqinr)
 library(Biostrings)
 library(dplyr)
+library(ggplot2)
 outdir = "analysis/7_dnds/"
 msa_file = "old/2102-mds/fig1/consensus_filt.fasta"
 
@@ -10,7 +11,7 @@ msa = ape::read.dna(msa_file,format = "fasta", as.matrix = T, as.character = T)
 regions = c("gag" = (792-3):2279, "pol" = 2078:5083, "env" = 6230:8812)
 
 #-------------------- run manually
-gene = "env"
+gene = "pol"
 t = msa[,6230:8812] # include Methionine alter this line
 ape::write.dna(t,paste0(outdir, gene,"-dna.fasta"), "fasta")
 
@@ -34,5 +35,11 @@ file.remove("temp.fasta")
 df = df[df$kaks != 0,]
 df = df[df$kaks != 1,]
 write.csv(df, paste0(outdir, gene,".csv"))
-plot(df)
-png(paste0(outdir,gene,".png"))
+
+df = read.csv(paste0(outdir, gene,".csv"))
+ggplot(df,aes(x = starts, y = kaks))+
+  geom_point()+
+  theme_classic() +
+  geom_hline(aes(yintercept = 1), colour = "red") +
+  labs(title = paste(gene,"- dnds per variable residue"))
+ggsave(paste0(outdir,gene,".png"))
