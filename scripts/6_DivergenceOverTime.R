@@ -6,7 +6,7 @@
 ### options
 analysis_outdir = "analysis/6_DivergenceOverTime/"
 indir = "data/tree/"
-patients = c("22763") #"15664","16207","22763","22828","26892","28545","29447","47939")
+patients = c("47939") #"15664","16207","22763","22828","26892","28545","29447","47939")
 vl_file = "data/patient_vl.csv"
 ###
 
@@ -96,7 +96,9 @@ g = ggplot(df2,aes(x = months, y = tp1_div, colour = as.factor(patient))) +
   geom_point() +
   geom_smooth(method = "lm", se = T,) +
   theme_classic() +
-  labs(subtitle = "linear regression of TN93 pairwise distannces of all timepoints against the patient tp0 sequence as proxy for founder sequence") +
+  scale_x_continuous(breaks = c(0,7,16)) + 
+  xlab("Months since switch to 2nd-Line Regimen") +
+  ylab("Diversity") +
   guides(colour=guide_legend(title="Patient"))
 
 #g

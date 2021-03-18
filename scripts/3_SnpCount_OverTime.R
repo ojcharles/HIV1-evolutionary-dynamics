@@ -5,7 +5,7 @@
 ### options
 analysis_outdir = "analysis/3_SnpCount_OverTime/"
 indir = "data/vcf-mar21-trust"
-patients = c("15664", "16207","22763")
+patients = c("15664","16207","22763","22828","26892","28545","29447","47939")
 vl_file = "data/patient_vl.csv"
 ###
 
