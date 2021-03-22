@@ -6,7 +6,7 @@
 ### options
 analysis_outdir = "analysis/6_DivergenceOverTime/"
 indir = "data/tree/"
-patients = c("47939") #"15664","16207","22763","22828","26892","28545","29447","47939")
+patients = c("15664") #"15664","16207","22763","22828","26892","28545","29447","47939")
 vl_file = "data/patient_vl.csv"
 ###
 
@@ -41,7 +41,7 @@ for(i in 1:length(patients)){
   df$timepoint = tp
   
   # filter as we just want distance from ancestral reconstructed subtype C (same in all patients)
-  col = grep("0|timepoint",colnames(df))
+  col = grep("1|timepoint",colnames(df))
   df = df[,col]
   colnames(df) = c("tp1_div", "timepoint")
   
@@ -95,8 +95,8 @@ df2 = rbind(df2,df)
 g = ggplot(df2,aes(x = months, y = tp1_div, colour = as.factor(patient))) +
   geom_point() +
   geom_smooth(method = "lm", se = T,) +
-  theme_classic() +
-  scale_x_continuous(breaks = c(0,7,16)) + 
+  theme_classic(text = element_text(size=26)) +
+  scale_x_continuous(breaks = c(0,5,10,17,21,27,31,33)) + 
   xlab("Months since switch to 2nd-Line Regimen") +
   ylab("Diversity") +
   guides(colour=guide_legend(title="Patient"))
