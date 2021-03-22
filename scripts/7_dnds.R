@@ -12,33 +12,41 @@ msa_file = "old/2102-mds/fig1/consensus_filt.fasta"
 region = data.frame(gene = c("gag","protease","reverse transcriptase","RNase","integrase","pol","env"),
            start = c((792-3),2237,2534,3854,4214,2078,6230),
            end = c(2279,2533,3853,4213,5080,5083,8812))
+run_from_scratch = T 
 ### end
+
+
+
 msa = ape::read.dna(msa_file,format = "fasta", as.matrix = T, as.character = T)
 #-------------------- gene -> dnds and plot. manually check each alignment!
 for(r in 1:nrow(region)){ # for each row
   gene = region$gene[r]
-  t = msa[,(region$start[r]):(region$end[r])] # include Methionine alter this line
-  ape::write.dna(t,paste0(outdir, gene,"-dna.fasta"), "fasta") # write msa to manual editing
+  if(run_from_scratch == T){
+    t = msa[,(region$start[r]):(region$end[r])] # include Methionine alter this line
+    ape::write.dna(t,paste0(outdir, gene,"-dna.fasta"), "fasta") # write msa to manual editing
+    
   
-
-  t = ape::read.dna(paste0(outdir, gene,"-dna-man.fasta"),format = "fasta",as.character = T, as.matrix = T) # manually edit and use this
-  starts = seq(1,ncol(t),3)
-  df = data.frame(starts = starts)
-  df$kaks = 0
-  for(i in 1:length(starts)){ # calculate the dnds per DNA position
-    start =  starts[i]
-    t2 = t[,start:(start+2)]
-    ape::write.dna(t2, "temp.fasta",format = "fasta")
-    t3 = seqinr::read.alignment("temp.fasta",format = "fasta")
-    t4 = seqinr::kaks(t3)
-    df$kaks[i] = mean(t4$ka) / mean(t4$ks)
-    print(mean(t4$ka) / mean(t4$ks))  
+    t = ape::read.dna(paste0(outdir, gene,"-dna-man.fasta"),format = "fasta",as.character = T, as.matrix = T) # manually edit and use this
+    starts = seq(1,ncol(t),3)
+    df = data.frame(starts = starts)
+    df$kaks = 0
+    for(i in 1:length(starts)){ # calculate the dnds per DNA position
+      start =  starts[i]
+      t2 = t[,start:(start+2)]
+      ape::write.dna(t2, "temp.fasta",format = "fasta")
+      t3 = seqinr::read.alignment("temp.fasta",format = "fasta")
+      t4 = seqinr::kaks(t3)
+      df$kaks[i] = mean(t4$ka) / mean(t4$ks)
+      print(mean(t4$ka) / mean(t4$ks))  
+    }
+    file.remove("temp.fasta")
+    df = df[df$kaks != 0,] # remove 0 and 1, uninteresting
+    df = df[df$kaks != 1,]
+    write.csv(df, paste0(outdir, gene,".csv"),row.names = F)
   }
-  file.remove("temp.fasta")
-  df = df[df$kaks != 0,] # remove 0 and 1, uninteresting
-  df = df[df$kaks != 1,]
-  write.csv(df, paste0(outdir, gene,".csv"))
   
+  df = read.csv(paste0(outdir, gene,".csv"))
+  df = df[!is.na(df$starts),] # remove random na
   ### read in resistance mutations and merge
   drm = read.delim("data/resmuts2.tsv",sep = "\t")
   drm$aaloc = str_extract(drm$mutation,"[0-9]{1,4}")
@@ -68,7 +76,6 @@ for(r in 1:nrow(region)){ # for each row
   
   
   if(gene == "gag"){
-    
     # add pi associated
     pi = read.csv("data/gag-pi-associated-sites.csv")[1:53,1:2]
     pi$aaloc = pi$position
@@ -77,7 +84,7 @@ for(r in 1:nrow(region)){ # for each row
       aaloc = df[i,]
       aaloc = merge(aaloc,pi, by = "aaloc")
       if(nrow(aaloc) > 0){
-        df$drm[i] = "pi"
+        df$drm[i] = aaloc[1,5]
       }
     }
   }
@@ -90,6 +97,6 @@ for(r in 1:nrow(region)){ # for each row
     theme_classic() +
     scale_x_continuous (breaks = c(1,250,500,750,1000,1250,1500,1750,2000,2250,2500,3000,3250,3500)) +
     geom_hline(aes(yintercept = 1), colour = "red", linetype = "dashed") +
-    labs(x="rt", y="dN/dS")
+    labs(x=paste(gene,"nucleotide position"), y="dN/dS")
   ggsave(paste0(outdir,gene,".png"))
 }
