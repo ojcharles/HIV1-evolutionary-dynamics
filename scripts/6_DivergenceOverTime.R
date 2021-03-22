@@ -6,7 +6,8 @@
 ### options
 analysis_outdir = "analysis/6_DivergenceOverTime/"
 indir = "data/tree/"
-patients = c("15664") #"15664","16207","22763","22828","26892","28545","29447","47939")
+patients = c("15664","16207","22763","22828","26892","28545","29447","47939")
+
 vl_file = "data/patient_vl.csv"
 ###
 
@@ -47,31 +48,49 @@ for(i in 1:length(patients)){
   
   # we now have a vector we are sure represents all sequences divergence from tp1
   
-
-#---------------------------- read in tp - months data
-{
-  vl_dat = read.csv("data/patient_vl.csv")
-  vl_dat = vl_dat[ vl_dat$patient == patients[i] , ]
-  ###### careful the line bwelow is a large loop
-  vl_dat$timepoint = 1:nrow(vl_dat)
-  vl_dat$sample_date = as.Date(vl_dat$sample_date, "%d/%m/%Y")
-  #for paper
-  for(j in 1:nrow(vl_dat)){
-    if(j > 1){
-      vl_dat$months[j] = elapsed_months(vl_dat$sample_date[j], vl_dat$sample_date[1])
-    }else{vl_dat$months[j] = 0}
+  
+  #---------------------------- read in tp - months data
+  {
+    vl_dat = read.csv("data/patient_vl.csv")
+    vl_dat = vl_dat[ vl_dat$patient == patients[i] , ]
+    ###### careful the line bwelow is a large loop
+    vl_dat$timepoint = 1:nrow(vl_dat)
+    vl_dat$sample_date = as.Date(vl_dat$sample_date, "%d/%m/%Y")
+    #for paper
+    for(j in 1:nrow(vl_dat)){
+      if(j > 1){
+        vl_dat$months[j] = elapsed_months(vl_dat$sample_date[j], vl_dat$sample_date[1])
+      }else{vl_dat$months[j] = 0}
+    }
+    # forced bodge
+    if(patient == "16207"){
+      vl_dat[vl_dat$months == 4,]$months <- 3
+    }
   }
-  # forced bodge
-  if(patient == "16207"){
-    vl_dat[vl_dat$months == 4,]$months <- 3
-  }
-}
   
   
-# timepoints -> months
-df = merge(df,vl_dat, by = "timepoint")
-
-df2 = rbind(df2,df)
+  # timepoints -> months
+  df = merge(df,vl_dat, by = "timepoint")
+  
+  df2 = rbind(df2,df)
+  
+  
+  #------------- per patient plot of data + linear model
+  g = ggplot(df,aes(x = months, y = tp1_div, colour = as.factor(patient))) +
+    geom_point() +
+    geom_smooth(method = "lm", se = T,) +
+    theme_classic() + theme(text = element_text(size=26)) +
+    scale_x_continuous(breaks = c(0,5,10,17,21,27,31,33)) + 
+    xlab("Months since switch to 2nd-Line Regimen") +
+    ylab("Diversity") +
+    labs(subtitle = paste("patient", patient)) + # remove?
+    guides(colour=guide_legend(title="Patient")) # remove?
+  
+  #g
+  ggsave(filename = paste0(analysis_outdir, "divergence_regression",patient,".png"), device = "png",plot = g)
+  
+  ggsave(filename = paste0(analysis_outdir, "divergence_regression",patient,".tiff"), device = "tiff",plot = g)
+  
 }
 
 
@@ -79,11 +98,11 @@ df2 = rbind(df2,df)
 #------------- simple R default smoothing
 
 #g = ggplot(df2,aes(x = months, y = tp1_div, colour = as.factor(patient))) +
- # geom_point() +
-  #geom_smooth(se = F) +
-  #theme_classic() +
-  #labs(subtitle = "linear regression of TN93 pairwise distannces of all timepoints against the patient tp0 sequence as proxy for founder sequence") +
-  #guides(colour=guide_legend(title="Patient"))
+# geom_point() +
+#geom_smooth(se = F) +
+#theme_classic() +
+#labs(subtitle = "linear regression of TN93 pairwise distannces of all timepoints against the patient tp0 sequence as proxy for founder sequence") +
+#guides(colour=guide_legend(title="Patient"))
 #g
 #ggsave(filename = paste0(analysis_outdir, "divergence_smooth.png"), device = "png",plot = g)
 
