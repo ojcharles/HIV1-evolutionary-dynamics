@@ -4,6 +4,7 @@ library(Biostrings)
 library(dplyr)
 library(ggplot2)
 library(ggrepel)
+library(stringr)
 
 ### variables
 outdir = "analysis/7_dnds/"
@@ -43,8 +44,12 @@ for(r in 1:nrow(region)){ # for each row
   drm$aaloc = str_extract(drm$mutation,"[0-9]{1,4}")
   drm$gene[drm$gene == "rt"] <- "reverse transcriptase"
   drm = drm[drm$gene == gene,]
+  # 
+  # DRms concatenate all mutation by aaloc
+  drm = drm %>%
+    group_by(aaloc) %>%
+    mutate(mut_by_loc = paste0(mutation, collapse = " "))
   
-
   
   # identify mutations that are resistant and assign a name
   df$aaloc = as.numeric(df$starts) / 3 ;  df$aaloc = ceiling(df$aaloc) # get aaloc from dnapos
@@ -55,8 +60,28 @@ for(r in 1:nrow(region)){ # for each row
     if(nrow(aaloc) > 0){
       df$drm[i] = aaloc$mutation
     }
-    
   }
+  
+  # alter mutations to be gene_loc*
+  df$drm = str_extract(df$drm, "[A-Z]{1}[0-9]{1,4}")
+  df$drm[grepl("[0-9]",df$drm)] <- paste0(df$drm[grepl("[0-9]",df$drm)],"*")
+  
+  
+  if(gene == "gag"){
+    
+    # add pi associated
+    pi = read.csv("data/gag-pi-associated-sites.csv")[1:53,1:2]
+    pi$aaloc = pi$position
+    # identify mutations that are resistant and assign a name
+    for(i in 1:nrow(df)){ # for each row if theres an entry in drm mark is as resistant
+      aaloc = df[i,]
+      aaloc = merge(aaloc,pi, by = "aaloc")
+      if(nrow(aaloc) > 0){
+        df$drm[i] = "pi"
+      }
+    }
+  }
+  
 
   ggplot(df)+
     geom_point(aes(x = starts, y = kaks))+

@@ -6,3 +6,4 @@
 *.tif
 .Rproj*
 report
+temp.fasta
