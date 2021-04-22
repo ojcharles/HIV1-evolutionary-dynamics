@@ -12,7 +12,7 @@ msa_file = "old/2102-mds/fig1/consensus_filt.fasta"
 region = data.frame(gene = c("gag","protease","reverse transcriptase","RNase","integrase","pol","env"),
            start = c((792-3),2237,2534,3854,4214,2078,6230),
            end = c(2279,2533,3853,4213,5080,5083,8812))
-run_from_scratch = T 
+run_from_scratch = F
 ### end
 
 
