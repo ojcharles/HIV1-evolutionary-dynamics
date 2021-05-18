@@ -5,5 +5,5 @@
 *.tiff
 *.tif
 .Rproj*
-report
+report/
 temp.fasta
