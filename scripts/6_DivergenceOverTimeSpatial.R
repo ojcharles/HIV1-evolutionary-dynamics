@@ -20,6 +20,7 @@ library(RColorBrewer)
 library(gridExtra)
 library(dplyr)
 library(ape)
+library(ggpubr)
 elapsed_months <- function(end_date, start_date) {
   ed <- as.POSIXlt(end_date)
   sd <- as.POSIXlt(start_date)
@@ -86,15 +87,19 @@ for(start in starts){ # spatial
   
   df2 = df2[df2$tp1_div <= 0.4,] # remove outliers
   #------------- per patient plot of data + linear model
+  
+  my.formula <- y ~ x
+  
   g = ggplot(df2,aes(x = months, y = tp1_div, colour = as.factor(patient))) +
     geom_point() +
-    geom_smooth(method = "lm", se = F) +
+    geom_smooth(method = "lm", se = F, formula = my.formula) +
     theme_classic() + theme(text = element_text(size=26)) +
     scale_x_continuous(breaks = c(0,5,10,17,21,27,31,33)) + 
     xlab("Months since switch to 2nd-Line Regimen") +
     ylab("Diversity") +
     labs(subtitle = paste("all patient", start, ":", end)) + # remove?
-    guides(colour=guide_legend(title="Patient")) # remove?
+    guides(colour=guide_legend(title="Patient"))+ # remove?
+    stat_regline_equation() #this means at 30th unit regresion line equation will be shown
   
   g
   ggsave(filename = paste0(analysis_outdir, "divergence_regression",start,".png"), device = "png",plot = g)
