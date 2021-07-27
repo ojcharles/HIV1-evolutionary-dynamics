@@ -99,7 +99,7 @@ for(start in starts){ # spatial
     ylab("Diversity") +
     labs(subtitle = paste("all patient", start, ":", end)) + # remove?
     guides(colour=guide_legend(title="Patient"))+ # remove?
-    stat_regline_equation() #this means at 30th unit regresion line equation will be shown
+    stat_cor() 
   
   g
   ggsave(filename = paste0(analysis_outdir, "divergence_regression",start,".png"), device = "png",plot = g)
