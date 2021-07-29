@@ -256,6 +256,13 @@ for(i in iter){
   
   
   
+  # -------- aug 2021 update - mutations that start > 50% at t0 now are flipped on the horizontal
+  # get the list of mutations that start above 50% at tp1
+  muts_to_flip = dat.plot[dat.plot$months == 0 & dat.plot$freq > 50,]$mutation
+  
+  # now set all the frequenceies for these mutations to 100 - x
+  dat.plot[dat.plot$mutation %in% muts_to_flip,3] = 100 - dat.plot[dat.plot$mutation %in% muts_to_flip,3]
+  
   #-------------------------------------------------------- Variant plot
   # t = dat.drm.plot
   # for(r in 1:nrow(t)){
