@@ -111,7 +111,7 @@ collapse_per_tp <- function(df){
 
 
 
-
+df.s = data.frame() ; df.ns = data.frame() # setting up tables for all pat plot later 
 iter = 1:length(patients)
 for(i in iter){
   patient = patients[i]
@@ -147,15 +147,29 @@ for(i in iter){
   d = get_filtered_data_per_consequence(dat.all, cons, vl_file)
   d = collapse_per_tp(d)
   write.csv(d,paste0(analysis_outdir,patient, cons, ".csv"))
+  df.s = rbind(df.s,data.frame(patient = patient, d))
   
   cons = "nonsynonymous"
   d = get_filtered_data_per_consequence(dat.all, cons, vl_file)
   d = collapse_per_tp(d)
   write.csv(d,paste0(analysis_outdir,patient, cons, ".csv"))
-  
-  
-  
+  df.ns = rbind(df.ns, data.frame(patient = patient, d))
 }
+
+
+for(patient in unique(df.s$patient)){
+  tp0 = max(df.s[df.s$patient == patient & df.s$months == 0,]$n)
+  df.s[df.s$patient == patient,3] = df.s[df.s$patient == patient,3] - tp0
+}
+
+
+
+
+#---------------- plot all together
+ggplot(df.ns[!df.s$patient == 22763,],aes(x = months, y = n)) +
+  geom_point(aes( colour = patient)) +
+  geom_smooth(method = "lm") +
+  ggpubr::stat_cor()
 
 
 
