@@ -84,10 +84,11 @@ for(patient in patients){
 
 
 
-g = ggplot(ld_all,aes(x = dist, y = r2_mean, colour = patient)) +
+ggplot(ld_all,aes(x = dist, y = r2_mean, colour = patient)) +
   geom_point(alpha = 0.2) +
-  geom_smooth(span = 0.5) +
-  theme_classic()
+  geom_smooth(span = 0.5,level = 0.90, se = F) +
+  theme_classic() +
+  xlim(0,7000)
 
 ggsave("analysis/4_ld/3_pats_ld_decay.png", g,"png")
 
