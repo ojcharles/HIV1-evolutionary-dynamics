@@ -19,6 +19,7 @@ set.seed(123)
 
 # ----- inputs
 file = "data/all_patients_haplos.fasta"
+file = "data/LD/n=8consensus_msa.fasta"
 mds_method = "non-metric" # metric or non-metric
 
 
@@ -37,7 +38,7 @@ if(mds_method == "metric"){
   t.mds = data.frame(sample = rownames(t.mds), MDS_D1 = t.mds[,1], MDS_D2 = t.mds[,2])
 }else{
   # non metric
-  t.mds = metaMDS(t.dist, k=2, trymax = 100)
+  t.mds = metaMDS(t.dist, k=2, try = 1000, trymax = 5000, maxit = 5000, plot = T)
   t.mds = t.mds$points
   t.mds = data.frame(sample = rownames(t.mds), MDS_D1 = t.mds[,1], MDS_D2 = t.mds[,2])
   stressplot(t.mds) # if the points are fairly around the red then we are happy
@@ -75,7 +76,7 @@ expand = 2 # font size increase (arbitrarily set at 2 for the moment)
 g = ggplot(df,aes(x = MDS_D1, y = MDS_D2, colour = patient, label = sample),alpha = 0.5) +
   geom_point(size = 4, alpha = 0.8) +
   theme_pubr() +
-  labs(x = "", y = "", title = paste("haplotype for all patients -", mds_method, " MDS method" )) +
+  labs(x = "", y = "", title = paste("consensus for all patients -", mds_method, " MDS method" )) +
   theme(legend.position="right") +
   guides(colour=guide_legend(title="Patient")) +
   scale_colour_manual(values = man_col_pal) +
@@ -84,19 +85,8 @@ g = ggplot(df,aes(x = MDS_D1, y = MDS_D2, colour = patient, label = sample),alph
 
 
 ggsave(plot = g, paste0("analysis/8_mds/",basename(file), ".png"), device = "png",dpi = 1000)
+ggsave(plot = g, paste0("analysis/8_mds/",basename(file), ".tiff"), device = "tiff",dpi = 300,width = 8, height = 8)
 # p = plotly::ggplotly(g)
 # htmlwidgets::saveWidget(p,file.path(normalizePath(dirname(paste0(file, ".html"))),basename(paste0(file, ".html"))))
-
-
-
-
-
-
-
-
-
-#------------------------- rerun with the non-metric MDS
-
-
 
 
