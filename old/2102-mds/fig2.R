@@ -17,7 +17,7 @@ library(reshape2)
 # genome scan
 # how many clusters along genome
 
-file = "fig2/25.02ref_allhaplos.fasta"
+file = "/Users/steve/Dropbox/Kemp_TASPMANUSCRIPT/CURRENT WORKING/haplotypes/refined_haplotypes_step2/all_patients_haplos.fasta"
 seq <- read.dna(file = file, format = "fasta",as.matrix = T)
 
 

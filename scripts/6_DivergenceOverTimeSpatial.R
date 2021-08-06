@@ -98,8 +98,8 @@ for(start in starts){ # spatial
     xlab("Months since switch to 2nd-Line Regimen") +
     ylab("Diversity") +
     labs(subtitle = paste("all patient", start, ":", end)) + # remove?
-    guides(colour=guide_legend(title="Patient"))+ # remove?
-    stat_cor() 
+    guides(colour=guide_legend(title="Patient")) + # remove?
+    stat_cor(aes(label = paste(..rr.label.., ..p.label.., label.sep = ", ")),label.x = 3) 
   
   g
   ggsave(filename = paste0(analysis_outdir, "divergence_regression",start,".png"), device = "png",plot = g)
