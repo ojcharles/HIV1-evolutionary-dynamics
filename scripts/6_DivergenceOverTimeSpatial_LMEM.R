@@ -14,6 +14,7 @@ indir = "data/tree/"
 patients = c("15664","16207","22763","22828","26892","28545","29447","47939")
 vl_file = "data/patient_vl.csv" # we need thsis to match tp's to dates
 bps = 1000 # how wide to look?
+CILevel # confidence Interval with FDR. so we want 95%, but doing 9 tests. so a bonferroni level would be
 ###
 
 #----- functions
@@ -29,6 +30,7 @@ library(ggpubr)
 library(ggeffects)
 library(stargazer)
 library(lmerTest)
+library(Mediana) # adjust CI for FDR
 elapsed_months <- function(end_date, start_date) {
   ed <- as.POSIXlt(end_date)
   sd <- as.POSIXlt(start_date)
@@ -140,7 +142,7 @@ for(ancestry in ancestries){
     
     
     # ----- plot the LMEM per patient
-    mixed.ranslope <- lme4::lmer(diversity ~ months + (1 + norm_months|patient), data = df2)
+    mixed.ranslope <- lme4::lmer(diversity ~ months + (1 + months|patient), data = df2)
     
     ### plot
     g1 = ggplot(df2, aes(x = months, y = diversity, colour = as.factor(patient))) +
@@ -165,7 +167,7 @@ for(ancestry in ancestries){
                        fill = "lightgrey", alpha = 0.5) +  # error band
            geom_point(data = df2,                      # adding the raw data (scaled values)
                       aes(x = months, y = diversity, colour = as.factor(patient))) + 
-           labs(x = "norm_months", y = "divergence from tp1 sample", 
+           labs(x = "months", y = "divergence from tp1 sample", 
                 title = "Virus may be diverging over time") + 
            theme_minimal()
     )
@@ -178,19 +180,23 @@ for(ancestry in ancestries){
     
     # ----- extract stats
     # table
-    stargazer(mixed.lmer, type = "text",
+    p = stargazer(mixed.lmer, type = "text",
               digits = 3,
-              star.cutoffs = c(0.05, 0.01, 0.001),
+              star.cutoffs = c(0.05, 0.05 / 9),
               digit.separator = "")
+    p.fdr = grepl("\\*\\*", p[7]) # if signif grabs it
     
+    # grab the significance
     # confidence intervals on the effect of months
-    out2 = confint(mixed.lmer)
-    print(out2) # if the months 2.5 and 97.5 are both + or both -  then that's fun.
+    #out2 = confint(mixed.lmer)
+    #print(out2) # if the months 2.5 and 97.5 are both + or both -  then that's fun.
     
+    # calculate p value 
     
     
     # if interesting plot, else next
-    if(out2[4,1] < 0 & out2[4,2] > 0){next}
+    if(!p.fdr){next}
+    #if(out2[4,1] < 0 & out2[4,2] > 0){next}
     ggsave(outfile1,g1,"png")
     ggsave(outfile2,g2,"png")
   } # start
@@ -198,10 +204,6 @@ for(ancestry in ancestries){
 } # ancestry
 
 file.remove("del.fasta")
-
-
-
-
 
 
 
