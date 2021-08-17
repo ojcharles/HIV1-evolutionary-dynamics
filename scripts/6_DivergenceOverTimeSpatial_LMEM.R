@@ -62,7 +62,15 @@ for(ancestry in ancestries){
       df$timepoint = tp
       
       
+      
       # sequence of index 1 is the inferred ancestor, so we just want the diversity per timepoint from this
+      if(length(grep("0", colnames(df))) > 0){ # if there is a tp0 patient
+        keep_tp1 = T
+        col = grep("0|timepoint",colnames(df)) # get col indexes of interest
+      }else{
+        keep_tp1 = F
+        col = grep("1|timepoint",colnames(df)) # get col indexes of interest
+      }
       col = grep("1|timepoint",colnames(df)) # get col indexes of interest
       df = df[,col] # subset cols
       colnames(df) = c("diversity", "timepoint")
@@ -95,7 +103,7 @@ for(ancestry in ancestries){
       # timepoints -> months
       df = merge(df,vl_dat, by = "timepoint")
       # remove initial tp
-      df = df[df$months != 0,]
+      if(keep_tp1 == F){df = df[df$months != 0,]}
       
       df2 = rbind(df2,df)
       
