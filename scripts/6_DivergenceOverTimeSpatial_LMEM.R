@@ -1,22 +1,23 @@
-# this script takes the patient separated fast files, as used in the phylogeny and generates the pairwise distances from tp1 to all other tps.
-# Then plots this divergence per month with smoothing
-# now does this per 1000 base pairs to look at spatial behaviour, does this do fun stuff at the highly LD sites?
-# https://ourcodingclub.github.io/tutorials/mixed-models/
+### OC SK 2021
+# This script runs the linear mixture model for divergence from ancestral strain
+# be that tp1, consensus M, or consensus C
+# per 1000 bp's
+# input fasta per patient with tp's and aligned ancestor.
 
-### update
-# this script performs a linear mixed effect model
-library(lme4)
+### ref
+# https://ourcodingclub.github.io/tutorials/mixed-models/
 
 
 ### options
-analysis_outdir = "analysis/6_DivergenceOverTime/"
+analysis_outdir = "analysis/6_DivergenceOverTimeLMEM/"
 indir = "data/tree/"
 patients = c("15664","16207","22763","22828","26892","28545","29447","47939")
-
-vl_file = "data/patient_vl.csv"
+vl_file = "data/patient_vl.csv" # we need thsis to match tp's to dates
+bps = 1000 # how wide to look?
 ###
 
 #----- functions
+library(lme4)
 library(ggplot2)
 library(stringr)
 library(ggnewscale)
@@ -34,9 +35,8 @@ elapsed_months <- function(end_date, start_date) {
 
 # ----- generate data
 starts = c(1,1000,2000,3000,4000,5000,6000,7000,8000)
-starts=8000
 for(start in starts){ # spatial
-  end = start + 1000
+  end = start + bps
   df2 = data.frame() # rowbind into
   for(i in 1:length(patients)){
     patient = patients[i]
