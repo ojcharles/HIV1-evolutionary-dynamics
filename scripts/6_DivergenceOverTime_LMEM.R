@@ -13,7 +13,6 @@ analysis_outdir = "analysis/6_DivergenceOverTime/"
 indir = "data/tree/"
 patients = c("15664","16207","22763","22828","26892","28545","29447","47939")
 vl_file = "data/patient_vl.csv" # we need thsis to match tp's to dates
-bps = 1000 # how wide to look?
 ###
 
 #----- functions
