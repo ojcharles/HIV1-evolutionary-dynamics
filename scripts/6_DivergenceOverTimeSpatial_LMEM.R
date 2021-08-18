@@ -6,6 +6,7 @@
 
 ### ref
 # https://ourcodingclub.github.io/tutorials/mixed-models/
+# https://cran.r-project.org/web/packages/lme4/vignettes/lmer.pdf
 
 
 ### options
@@ -17,7 +18,7 @@ bps = 1000 # how wide to look?
 CILevel # confidence Interval with FDR. so we want 95%, but doing 9 tests. so a bonferroni level would be
 ###
 
-#----- functions
+#-------------------- functions
 library(lme4)
 library(ggplot2)
 library(stringr)
@@ -38,14 +39,19 @@ elapsed_months <- function(end_date, start_date) {
 } # takes timepoints, matches to dates in the VL data. then normalises such that we get months from first datapoint
 
 
-# ----- generate data
+
+
+# -------------------- per founder, per genomic region, calculate: lmem & p value for effect of months
 ancestries = c("aligned_baseline_" , "aligned_c_", "aligned_m_")
 for(ancestry in ancestries){
   
+  # -----  per genomic section
   starts = c(1,1000,2000,3000,4000,5000,6000,7000,8000)
   #starts = 1
+  dfp = data.frame() # p values for effect of months per chunk
   for(start in starts){
-    df2 = data.frame() # rowbind into
+    # ----- generate data
+    df2 = data.frame() # x and y values
     for(i in 1:length(patients)){
       patient = patients[i]
       alignment = paste0(indir, ancestry, patient, ".fasta")
@@ -80,7 +86,7 @@ for(ancestry in ancestries){
       # we now have a vector we are sure represents all sequences divergence from tp1
       
       
-      #---------------------------- read in tp - months data
+      # ----- read in tp - months data
       {
         vl_dat = read.csv("data/patient_vl.csv")
         vl_dat = vl_dat[ vl_dat$patient == patients[i] , ]
@@ -111,45 +117,47 @@ for(ancestry in ancestries){
       
       df2 = df2[df2$diversity < 0.4,] # remove spurious
       
-      
-      
     } # patient
+    
     # remove NA, these occure where its all just insertions
     df2 = df2[complete.cases(df2),]
   
-  
-    # run through the stats, if significant then plot. else ignore and goto next.
     
     
     
     
-    # ----- per ancestry run this
-    # ----- Linear Mixed Effects Modelling
-    # is there an association between diversity and time, when we control for the variation in each patient?
+    # ---------- Stats with Linear Mixed Effects Modelling
+    # we are testing for is the slope (effect) of months on diversity significantly different from 0?
+    # + or -
     
     # clean up the explanatory variable so centred and scaled
+    # we actually ran this with normalised and erbatim months and the same thing
     df2$norm_months= scale(df2$months, center = TRUE, scale = TRUE)
     
-    mixed.lmer <- lme4::lmer(diversity ~ months + (1|patient), data = df2)
+    # ----- generate the model with an overall trend 
+    # lmerTest is a pull of lmer4 with p value stats (compared to 0) using a Satterthwaite t-test
+    mixed.lmer <- lmerTest::lmer(diversity ~ months + (1|patient), data = df2)
     summary(mixed.lmer)
+    # dev
+    #plot(mixed.lmer)  # looks alright, no patterns evident
+    #qqnorm(resid(mixed.lmer))
+    #qqline(resid(mixed.lmer))  # points fall nicely onto the line - good!
     
-    plot(mixed.lmer)  # looks alright, no patterns evident
-    
-    qqnorm(resid(mixed.lmer))
-    qqline(resid(mixed.lmer))  # points fall nicely onto the line - good!
     
     
     
     
     # ----- plot the LMEM per patient
-    mixed.ranslope <- lme4::lmer(diversity ~ months + (1 + months|patient), data = df2)
+    # give it a random slope per patient
+    mixed.ranslope <- lmerTest::lmer(diversity ~ months + (1 + months|patient), data = df2)
     
     ### plot
     g1 = ggplot(df2, aes(x = months, y = diversity, colour = as.factor(patient))) +
       geom_point(alpha = 0.5) +
       theme_classic() +
       geom_line(data = cbind(df2, pred = predict(mixed.ranslope)), aes(y = pred), size = 1)   # adding predicted line from mixed model 
-    
+    #geom_line(data = cbind(df2, pred = predict(mixed.lmer)), aes(y = pred), size = 1)   # yep so the above is a random slope
+    # I beleive the mixed.randslope model after running ggplotly
     outfile1 = paste0(analysis_outdir, start,"_",ancestry, "random-slope-random-intercept-model.png")
     
     
@@ -162,44 +170,67 @@ for(ancestry in ancestries){
     
     # Plot the predictions 
     g2 = (ggplot(pred.mm) + 
-           geom_line(aes(x = x, y = predicted)) +          # slope
-           geom_ribbon(aes(x = x, ymin = predicted - std.error, ymax = predicted + std.error), 
-                       fill = "lightgrey", alpha = 0.5) +  # error band
-           geom_point(data = df2,                      # adding the raw data (scaled values)
-                      aes(x = months, y = diversity, colour = as.factor(patient))) + 
-           labs(x = "months", y = "divergence from tp1 sample", 
-                title = "Virus may be diverging over time") + 
-           theme_minimal()
+            geom_line(aes(x = x, y = predicted)) +          # slope
+            geom_ribbon(aes(x = x, ymin = predicted - std.error, ymax = predicted + std.error), 
+                        fill = "lightgrey", alpha = 0.5) +  # error band
+            geom_point(data = df2,                      # adding the raw data (scaled values)
+                       aes(x = months, y = diversity, colour = as.factor(patient))) + 
+            labs(x = "months", y = "divergence from tp1 sample", 
+                 title = "Virus may be diverging over time") + 
+            theme_minimal()
     )
     outfile2 = paste0(analysis_outdir, start, "_",ancestry, "overall-model-prediction.png")
     
     
-    
-    
-    
-    
-    # ----- extract stats
-    # table
-    p = stargazer(mixed.lmer, type = "text",
-              digits = 3,
-              star.cutoffs = c(0.05, 0.05 / 9),
-              digit.separator = "")
-    p.fdr = grepl("\\*\\*", p[7]) # if signif grabs it
-    
-    # grab the significance
-    # confidence intervals on the effect of months
-    #out2 = confint(mixed.lmer)
-    #print(out2) # if the months 2.5 and 97.5 are both + or both -  then that's fun.
-    
-    # calculate p value 
-    
-    
-    # if interesting plot, else next
-    if(!p.fdr){next}
-    #if(out2[4,1] < 0 & out2[4,2] > 0){next}
+    # plot them all
     ggsave(outfile1,g1,"png")
     ggsave(outfile2,g2,"png")
+    
+    
+    
+    
+    
+    
+    # ---------- KEY STATISTICS
+    
+    # what is the p that the effect of months is non-0?
+    p = anova(mixed.lmer)$`Pr(>F)`
+    
+
+    # now record the p per chunk
+    dfp = rbind(dfp, data.frame(start = start, 
+                                p = p))
+    
+    # remove the model and outputs to ensure they are recalculated
+    rm("mixed.lmer", "p")
   } # start
+  # we now have for the founder, per genome chunk the p value
+  
+  # adjust p values
+  dfp$p
+  dfp$p_bh = p.adjust(dfp$p,method = "BH")
+  write.csv(dfp, paste0(analysis_outdir, ancestry, "_Pvals_BH_adjust.csv"))
+  
+  
+  
+  
+  
+  
+  
+  # --- now remove any plots that have insignificant p
+  # i could have stored them in a list but eh this works
+  
+  for(start in starts){
+    is_signif = dfp[dfp$start == start,3] < 0.05
+    if(is_signif == FALSE){
+      # remove the plots
+      file.remove(paste0(analysis_outdir, start,"_",ancestry, "random-slope-random-intercept-model.png"))
+      file.remove(paste0(analysis_outdir, start, "_",ancestry, "overall-model-prediction.png"))
+    }
+  }
+      
+
+
   
 } # ancestry
 
@@ -214,6 +245,19 @@ file.remove("del.fasta")
 
 
 
+# ---------- code graveyard
+# # ----- extract stats
+# # table
+# p = stargazer(mixed.lmer, type = "text",
+#               digits = 3,
+#               star.cutoffs = c(0.05, 0.05 / 9),
+#               digit.separator = "")
+# p.fdr = grepl("\\*\\*", p[7]) # if signif grabs it
+# 
+# # grab the significance
+# # confidence intervals on the effect of months
+# out2 = confint(mixed.lmer)
 
+# now loop through the significant
 
 
