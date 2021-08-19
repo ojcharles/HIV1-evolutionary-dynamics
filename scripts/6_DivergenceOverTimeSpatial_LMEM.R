@@ -173,12 +173,11 @@ for(ancestry in ancestries){
             geom_line(aes(x = x, y = predicted)) +          # slope
             geom_ribbon(aes(x = x, ymin = predicted - std.error, ymax = predicted + std.error), 
                         fill = "lightgrey", alpha = 0.5) +  # error band
-            geom_point(data = df2,                      # adding the raw data (scaled values)
+            geom_point(data = df2,                       # adding the raw data (scaled values)
                        aes(x = months, y = diversity, colour = as.factor(patient))) + 
-            labs(x = "months", y = "divergence from tp1 sample", 
-                 title = "Virus may be diverging over time") + 
-            theme_minimal()
-    )
+            labs(x = "months", y = "Divergence from 1st sample") + 
+            theme_minimal(base_size = 14))
+    
     outfile2 = paste0(analysis_outdir, start, "_",ancestry, "overall-model-prediction.png")
     
     
